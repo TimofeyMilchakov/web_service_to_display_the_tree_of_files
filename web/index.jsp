@@ -12,10 +12,8 @@
     <script src="./scripts/jquery.min.js"></script>
     <script>
       function getSubfolders(nameFolder,idFolder) {
-        $.ajax({
-          method: "get",
-          url: "folder",
-          data: { name:nameFolder}
+        $.post("folder",{
+          data:"qweqwe2"
         }).done(function (response) {
           $("#"+ idFolder).html(response)
         })

@@ -1,5 +1,6 @@
 package servlets;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +13,10 @@ import java.io.IOException;
  */
 @WebServlet(name = "Folders")
 public class Folders extends HttpServlet{
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nameFolder = (String) request.getAttribute("name");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nameFolder = (String) request.getParameter("data");
 //        String nameFolder = "you";
+        //http://fontawesome.ru/all-icons/
         response.getWriter().write(nameFolder + " 4mo");
     }
 }
