@@ -10,6 +10,14 @@
         <url-pattern>/folder</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>MoveFolder</servlet-name>
+        <url-pattern>/move</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>MoveFolder</servlet-name>
+        <servlet-class>servlets.MoveFolder</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>Folder</servlet-name>
         <servlet-class>servlets.Folders</servlet-class>
