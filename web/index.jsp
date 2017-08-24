@@ -20,8 +20,12 @@
 </head>
 <body>
 <script>getFiestFolder()</script>
-
-<div id="fF" ></div>
+<div>
+    <button value="n" onclick="powerButton()" id="moveButton">переместить выбранную папку</button>
+    <button onclick="addNewFolder()">добавить папку</button>
+    <button onclick="deleteFolder()">удалить папку</button>
+</div>
+<div id="fF"></div>
 
 </body>
 </html>

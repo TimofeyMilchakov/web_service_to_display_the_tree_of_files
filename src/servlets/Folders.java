@@ -1,5 +1,8 @@
 package servlets;
 
+import Models.FolderEntity;
+import Repositories.FolderRepositories;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -7,35 +10,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by ttt on 22.08.2017.
  */
 @WebServlet(name = "Folders")
-public class Folders extends HttpServlet{
+public class Folders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nameFolder = (String) request.getParameter("data");
+        String idFolder = (String) request.getParameter("id");
+        ArrayList<FolderEntity> childFolder = FolderRepositories.getChildren(Integer.parseInt(idFolder));
         StringBuilder htmlText = new StringBuilder();
-        htmlText.
-                append("<li>" +
-                        "div id =\""+nameFolder+"-div\">"+
-                        "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"sub"+nameFolder+"\" onclick=\"getSubfolders('sub"+ nameFolder +"','sub"+nameFolder+"')\"></i>"+
-
-                        "<i class=\"fa fa-folder-o\" onclick=\"colorFolder('sub"+nameFolder+"')\" id=\"sub"+nameFolder+"-folder\" aria-hidden=\"true\">sub"+nameFolder+"</i>" +
-                        "<ul id=\"sub"+nameFolder+"-list\">" +
-                        "</ul>"+
-                        "</div>"+
-                        "</li>");
+        for (int i = 0; i < childFolder.size(); i++) {
+            String nameFolder = childFolder.get(i).getName();
+            int id = childFolder.get(i).getId();
+            htmlText.
+                    append("<li id =\"" + id + "-li\">" +
+//                            "div id =\"" + id + "-div\">" +
+                            "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"" + id + "\" onclick=\"getSubfolders('" + id + "')\"></i>" +
+                            "<i class=\"fa fa-folder-o\" onclick=\"colorFolder('" + id + "')\" id=\"" + id + "-folder\"  aria-hidden=\"true\">" + nameFolder + "</i>" +
+                            "<ul id=\"" + id + "-list\">" +
+                            "</ul>" +
+//                            "</div>" +
+                            "</li>");
+        }
         response.getWriter().write(htmlText.toString());
     }
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder fiestFolder = new StringBuilder();
-        fiestFolder.
-                append( "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"fiestFolder\" onclick=\"getSubfolders('name2','fiestFolder')\"></i>"+
 
-                        "<i class=\"fa fa-folder-o\" id=\"fiestFolder-folder\" aria-hidden=\"true\">fiestFolder</i>" +
-                        "<ul id=\"fiestFolder-list\">" +
-                        "</ul>");
-        resp.getWriter().write(fiestFolder.toString());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        StringBuilder htmlText = new StringBuilder();
+        FolderEntity folderEntity = FolderRepositories.getFolden(0);
+        String nameFolder = folderEntity.getName();
+        int id = folderEntity.getId();
+        htmlText.
+                append("<li id =\"" + id + "-li\">" +
+//                        "div id =\"" + id + "-div\">" +
+                        "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"" + id + "\" onclick=\"getSubfolders('" + id + "')\"></i>" +
+                        "<i class=\"fa fa-folder-o\" onclick=\"colorFolder('" + id + "')\" id=\"" + id + "-folder\" aria-hidden=\"true\">" + nameFolder + "</i>" +
+                        "<ul id=\"" + id + "-list\">" +
+                        "</ul>" +
+//                        "</div>" +
+                        "</li>");
+        response.getWriter().write(htmlText.toString());
     }
 }

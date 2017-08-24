@@ -1,5 +1,7 @@
 package servlets;
 
+import Repositories.FolderRepositories;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,5 +14,6 @@ public class MoveFolder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nameFolder = request.getParameter("name");
         String newPart = request.getParameter("part");
+        FolderRepositories.moveFolder(Integer.getInteger(nameFolder),Integer.getInteger(newPart));
     }
 }
