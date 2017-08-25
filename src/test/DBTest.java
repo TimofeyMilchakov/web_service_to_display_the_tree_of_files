@@ -17,14 +17,15 @@ public class DBTest {
 
     @Test
     public void testSetAndGet(){
-        FolderRepositories.addFolder(1,"cild1");
-        FolderRepositories.addFolder(1,"cild2");
+//        FolderRepositories.addFolder(1,"cild1");
+//        FolderRepositories.addFolder(1,"cild2");
         FolderRepositories.getChildren(1);
         FolderRepositories.getFolden(1);
     }
 
     @Test
     public void testMoveFolder(){
-        FolderRepositories.moveFolder(4,1);
+//        FolderRepositories.upDateFolder();
+        FolderRepositories.deleteFolder(5);
     }
 }

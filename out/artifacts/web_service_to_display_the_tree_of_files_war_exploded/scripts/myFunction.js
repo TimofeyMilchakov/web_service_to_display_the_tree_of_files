@@ -1,24 +1,13 @@
 function colorFolder(nameFolder) {
-    if(document.getElementById("moveButton").nodeValue=="y"){
-        document.getElementById("moveButton").nodeValue="n"
-        var list = document.getElementsByClassName("fa fa-folder-open");
-        for(var i = 0;i<list.length;i++){
-            list[i].className="fa fa-folder-open-o"
-            var id_ = list[i].id.substring(0,2);
-            if(id_==id)
-                return;
-            moveFolder(id_,id);
+    if (document.getElementById("moveButton").style.display == "none") {
+        document.getElementById("moveButton").style.display = "";
+        var id_ = getId()
+        $("#test").html(id_);
+        if (id_ == nameFolder)
             return;
-        }
-        var list = document.getElementsByClassName("fa fa-folder");
-        for(var i = 0;i<list.length;i++){
-            list[i].className="fa fa-folder-o"
-            var id_ = list[i].id.substring(0,2);
-            if(id_==id)
-                return;
-            moveFolder(id_,id);
-            return;
-        }
+        moveFolder(id_, nameFolder);
+
+
     }
     if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder") {
         document.getElementById(nameFolder + "-folder").className = "fa fa-folder-o"
@@ -29,18 +18,38 @@ function colorFolder(nameFolder) {
         return;
     }
     var list = document.getElementsByClassName("fa fa-folder-open");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open-o"
+    for (var i = 0; i < list.length; i++) {
+        list[i].className = "fa fa-folder-open-o"
     }
     var list = document.getElementsByClassName("fa fa-folder");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-o"
+    for (var i = 0; i < list.length; i++) {
+        list[i].className = "fa fa-folder-o"
     }
-    if(document.getElementById(nameFolder + "-folder").className == "fa fa-folder-open-o"){
-        document.getElementById(nameFolder + "-folder").className = "fa fa-folder"
-    }else{
+    if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder-open-o") {
         document.getElementById(nameFolder + "-folder").className = "fa fa-folder-open"
+    } else {
+        document.getElementById(nameFolder + "-folder").className = "fa fa-folder"
     }
+}
+
+function getId() {
+    for (var i = 0; i < 10000; i++) {
+        if (document.getElementById(i + "-folder") == null)
+            continue;
+        if (document.getElementById(i + "-folder").className == "fa fa-folder") {
+            var id_ = i;
+            document.getElementById(id_).className = "fa fa-folder-o";
+
+            return id_;
+        }
+        if (document.getElementById(i + "-folder").className == "fa fa-folder-open") {
+            var id_ = i;
+            document.getElementById(id_).className = "fa fa-folder-open-o";
+
+            return id_;
+        }
+    }
+
 }
 
 function openFolder(nameFolder) {
@@ -60,62 +69,56 @@ function openFolder(nameFolder) {
     }
 }
 
-function deleteFolder() {
-    var list = document.getElementsByClassName("fa fa-folder-open");
-    var id;
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open-o"
-        id = list[i].id.substring(0,2);
-        $.post("delete",{
-            id:id
-        }).done();
-        $("#"+id+"-li").removeData();
-    }
-    var list = document.getElementsByClassName("fa fa-folder");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-o"
-        id = list[i].id.substring(0,2);
-        $.post("delete",{
-            id:id
-        }).done();
-        $("#"+id+"-li").removeData();
-    }
 
+function deleteFolder() {
+    var id_ = getId()
+    $.post("delete", {
+        id: id_
+    }).done(function () {
+        $("#" + id_ + "-li").remove();
+    });
+
+
+}
+
+function renameFolder() {
+    var name = document.getElementById("inputBox").value;
+    document.getElementById("inputBox").value = "";
+    if (name == "")
+        return
+    var id_ = getId();
+    var temp = document.getElementById(id_).className;
+    $.get("set", {
+        id: id_,
+        name: name
+    }).done();
+    $("#" + id_ + "-folder").html(name);
+    document.getElementById(id_).className = temp;
 }
 
 function addNewFolder() {
-    var name
-    var list = document.getElementsByClassName("fa fa-folder-open");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open-o"
-        var id_ = list[i].id.substring(0,2);
-        $.post("set",{
-            id:id_,
-            name:name
-        }).done();
+    var name = document.getElementById("inputBox").nodeValue;
+    if (name == "")
+        return
+    var id_ = getId();
+    $.post("set", {
+        parent_id: id_,
+        name: name
+    }).done();
 
-        return;
-    }
-    var list = document.getElementsByClassName("fa fa-folder");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-o"
-        var id_ = list[i].id.substring(0,2);
-        if(id_==id)
-            return;
-        moveFolder(id_,id);
-        return;
-    }
+
 }
 
 function powerButton() {
-    if((document.getElementsByClassName("fa fa-folder-open-o").length+document.getElementsByClassName("fa fa-folder-o").length)==1){
-        document.getElementById("moveButton").nodeValue="y";
+    if ((document.getElementsByClassName("fa fa-folder-open").length + document.getElementsByClassName("fa fa-folder").length) == 1) {
+        // noinspection JSAnnotator
+        document.getElementById("moveButton").style.display = "none";
     }
 }
 
 
-
 function getSubfolders(idFolder) {
+
     if (document.getElementById(idFolder + "-list").childElementCount != 0) {
         if (document.getElementById(idFolder).className == 'fa fa-angle-right') {
             document.getElementById(idFolder).className = 'fa fa-angle-down';
@@ -127,6 +130,10 @@ function getSubfolders(idFolder) {
             document.getElementById(idFolder + "-list").style.display = "none";
             openFolder(idFolder);
             return;
+        }
+    } else {
+        if (document.getElementById(idFolder).className == 'fa fa-angle-right') {
+            document.getElementById(idFolder).className = 'fa fa-angle-down';
         }
     }
     document.getElementById(idFolder).className = 'fa fa-angle-down';
@@ -143,8 +150,10 @@ function moveFolder(nameFolder, newFolder) {
     $.post("move", {
         name: nameFolder,
         part: newFolder
-    }).done();
-    $("#" + nameFolder + "-li").appendTo("#" + newFolder + "-list");
+    }).done(function () {
+        $("#" + nameFolder + "-li").appendTo("#" + newFolder + "-list");
+    });
+
 
 }
 

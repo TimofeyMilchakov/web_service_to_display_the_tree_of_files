@@ -1,5 +1,6 @@
 package servlets;
 
+import Models.FolderEntity;
 import Repositories.FolderRepositories;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,9 @@ public class MoveFolder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nameFolder = request.getParameter("name");
         String newPart = request.getParameter("part");
-        FolderRepositories.moveFolder(Integer.getInteger(nameFolder),Integer.getInteger(newPart));
+        FolderEntity newFolder = new FolderEntity();
+        newFolder.setId(Integer.parseInt(nameFolder));
+        newFolder.setParent_id(Integer.parseInt(newPart));
+        FolderRepositories.upDateFolder(newFolder);
     }
 }

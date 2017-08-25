@@ -16,12 +16,12 @@ public class DeleteFolders extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int id = Integer.parseInt(req.getParameter("id"));
         ArrayList<FolderEntity> deleteList=new ArrayList<>();
-        deleteList.addAll(FolderRepositories.getChildren(id));
+        deleteList.add(FolderRepositories.getFolden(id));
         while (deleteList.size()!=0){
-            FolderEntity tempFolder = deleteList.get(0);
+            FolderEntity tempFolder = deleteList.remove(0);
             deleteList.addAll(FolderRepositories.getChildren(tempFolder.getId()));
             FolderRepositories.deleteFolder(tempFolder.getId());
-            deleteList.remove(tempFolder);
+//            deleteList.remove(tempFolder);
         }
     }
 }
