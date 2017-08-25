@@ -7,27 +7,25 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
+<head>
     <link rel="stylesheet" href="./content/font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        li {
+            list-style-type: none;
+        }
+    </style>
     <script src="./scripts/jquery.min.js"></script>
-    <script>
-      function getSubfolders(nameFolder,idFolder) {
-        $.post("folder",{
-          data:"qweqwe2"
-        }).done(function (response) {
-          $("#"+ idFolder).html(response)
-        })
-
-
-      }
-
-    </script>
+    <script src="scripts/myFunction.js"></script>
     <title>$Title$</title>
-  </head>
-  <body>
-  <div id="testAjax"></div>
-  <script>getSubfolders("qewqwe","fefe")</script>
-  <i class="fa fa-folder-open" aria-hidden="true" id="fefe"></i>
+</head>
+<body>
+<script>getFiestFolder()</script>
+<div>
+    <button value="n" onclick="powerButton()" id="moveButton">переместить выбранную папку</button>
+    <button onclick="addNewFolder()">добавить папку</button>
+    <button onclick="deleteFolder()">удалить папку</button>
+</div>
+<div id="fF"></div>
 
-  </body>
+</body>
 </html>

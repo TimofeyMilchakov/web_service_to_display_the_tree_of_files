@@ -3,8 +3,10 @@ package Repositories;
 import DBTools.HibernateUtil;
 import Models.FolderEntity;
 import org.hibernate.Session;
+import org.hibernate.criterion.Expression;
 
 import javax.management.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,11 @@ public class FolderRepositories {
     public static ArrayList<FolderEntity> getChildren(int parent_id ){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        ArrayList<FolderEntity> childItem = (ArrayList<FolderEntity>) session.createQuery("from FolderEntity WHERE FolderEntity.parent_id="+parent_id).list();
+
+        ArrayList<FolderEntity> childItem = (ArrayList<FolderEntity>)session.
+                createCriteria(FolderEntity.class).
+                add(Expression.like("parent_id",parent_id)).
+                list();
         session.getTransaction().commit();
         session.close();
         return childItem;
@@ -35,7 +41,10 @@ public class FolderRepositories {
     public static FolderEntity getFolden(int id){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        List folderEntity = session.createQuery("FROM  FolderEntity WHERE FolderEntity.id="+id).list();
+        List folderEntity = session.
+                createCriteria(FolderEntity.class).
+                add(Expression.like("id",id)).
+                list();
         session.getTransaction().commit();
         session.close();
         return (FolderEntity) folderEntity.get(0);
@@ -65,10 +74,10 @@ public class FolderRepositories {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         FolderEntity folderEntity = new FolderEntity();
-        folderEntity.setId(null);
         folderEntity.setName(name);
         folderEntity.setParent_id(idParent);
         session.save(folderEntity);
-
+        session.getTransaction().commit();
+        session.close();
     }
 }

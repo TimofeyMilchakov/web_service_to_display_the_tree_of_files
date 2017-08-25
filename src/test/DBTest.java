@@ -1,5 +1,3 @@
-package test;
-
 import Models.FolderEntity;
 import Repositories.FolderRepositories;
 import org.junit.Assert;
@@ -14,7 +12,19 @@ public class DBTest {
     @Test
     public void testConnectDB(){
         ArrayList<FolderEntity> folderEntities = FolderRepositories.getAll();
-        Assert.assertEquals(9,folderEntities.size());
+        Assert.assertEquals(1,folderEntities.size());
     }
 
+    @Test
+    public void testSetAndGet(){
+        FolderRepositories.addFolder(1,"cild1");
+        FolderRepositories.addFolder(1,"cild2");
+        FolderRepositories.getChildren(1);
+        FolderRepositories.getFolden(1);
+    }
+
+    @Test
+    public void testMoveFolder(){
+        FolderRepositories.moveFolder(4,1);
+    }
 }

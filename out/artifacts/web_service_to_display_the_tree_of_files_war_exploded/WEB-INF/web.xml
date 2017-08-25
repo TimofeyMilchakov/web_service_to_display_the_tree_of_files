@@ -10,8 +10,35 @@
         <url-pattern>/folder</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>MoveFolder</servlet-name>
+        <url-pattern>/move</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteFolders</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SetFolders</servlet-name>
+        <url-pattern>/set</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SetFolders</servlet-name>
+        <servlet-class>servlets.SetFolders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MoveFolder</servlet-name>
+        <servlet-class>servlets.MoveFolder</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>Folder</servlet-name>
         <servlet-class>servlets.Folders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteFolders</servlet-name>
+        <servlet-class>servlets.DeleteFolders</servlet-class>
     </servlet>
 </web-app>

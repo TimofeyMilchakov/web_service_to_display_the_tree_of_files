@@ -10,15 +10,6 @@ import javax.persistence.*;
 public class FolderEntity {
     private int id;
     private String name;
-
-    public int getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(int parent_id) {
-        this.parent_id = parent_id;
-    }
-
     private int parent_id ;
 
     @Id
@@ -43,7 +34,12 @@ public class FolderEntity {
 
     @Basic
     @Column(name = "parent_id ")
-
+    public int getParent_id() {
+        return parent_id;
+    }
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,7 +50,7 @@ public class FolderEntity {
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (parent_id  != null ? !parent_id .equals(that.parent_id ) : that.parent_id  != null) return false;
+        if (parent_id  != that.parent_id) return false;
 
         return true;
     }
@@ -63,7 +59,7 @@ public class FolderEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (subfolder != null ? subfolder.hashCode() : 0);
+        result = 31 * result + parent_id;
         return result;
     }
 }

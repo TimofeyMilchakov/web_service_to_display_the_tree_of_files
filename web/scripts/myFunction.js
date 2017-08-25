@@ -1,18 +1,18 @@
 function colorFolder(nameFolder) {
     if(document.getElementById("moveButton").nodeValue=="y"){
         document.getElementById("moveButton").nodeValue="n"
-        var list = document.getElementsByClassName("fa fa-folder-open-o");
+        var list = document.getElementsByClassName("fa fa-folder-open");
         for(var i = 0;i<list.length;i++){
-            list[i].className="fa fa-folder-open"
+            list[i].className="fa fa-folder-open-o"
             var id_ = list[i].id.substring(0,2);
             if(id_==id)
                 return;
             moveFolder(id_,id);
             return;
         }
-        var list = document.getElementsByClassName("fa fa-folder-o");
+        var list = document.getElementsByClassName("fa fa-folder");
         for(var i = 0;i<list.length;i++){
-            list[i].className="fa fa-folder"
+            list[i].className="fa fa-folder-o"
             var id_ = list[i].id.substring(0,2);
             if(id_==id)
                 return;
@@ -20,26 +20,26 @@ function colorFolder(nameFolder) {
             return;
         }
     }
-    if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder-o") {
-        document.getElementById(nameFolder + "-folder").className = "fa fa-folder"
-        return;
-    }
-    if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder-open-o") {
-        document.getElementById(nameFolder + "-folder").className = "fa fa-folder-open"
-        return;
-    }
-    var list = document.getElementsByClassName("fa fa-folder-open-o");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open"
-    }
-    var list = document.getElementsByClassName("fa fa-folder-o");
-    for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder"
-    }
-    if(document.getElementById(nameFolder + "-folder").className == "fa fa-folder"){
+    if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder") {
         document.getElementById(nameFolder + "-folder").className = "fa fa-folder-o"
-    }else{
+        return;
+    }
+    if (document.getElementById(nameFolder + "-folder").className == "fa fa-folder-open") {
         document.getElementById(nameFolder + "-folder").className = "fa fa-folder-open-o"
+        return;
+    }
+    var list = document.getElementsByClassName("fa fa-folder-open");
+    for(var i = 0;i<list.length;i++){
+        list[i].className="fa fa-folder-open-o"
+    }
+    var list = document.getElementsByClassName("fa fa-folder");
+    for(var i = 0;i<list.length;i++){
+        list[i].className="fa fa-folder-o"
+    }
+    if(document.getElementById(nameFolder + "-folder").className == "fa fa-folder-open-o"){
+        document.getElementById(nameFolder + "-folder").className = "fa fa-folder-open"
+    }else{
+        document.getElementById(nameFolder + "-folder").className = "fa fa-folder"
     }
 }
 
@@ -61,19 +61,19 @@ function openFolder(nameFolder) {
 }
 
 function deleteFolder() {
-    var list = document.getElementsByClassName("fa fa-folder-open-o");
+    var list = document.getElementsByClassName("fa fa-folder-open");
     var id;
     for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open"
+        list[i].className="fa fa-folder-open-o"
         id = list[i].id.substring(0,2);
         $.post("delete",{
             id:id
         }).done();
         $("#"+id+"-li").removeData();
     }
-    var list = document.getElementsByClassName("fa fa-folder-o");
+    var list = document.getElementsByClassName("fa fa-folder");
     for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder"
+        list[i].className="fa fa-folder-o"
         id = list[i].id.substring(0,2);
         $.post("delete",{
             id:id
@@ -85,9 +85,9 @@ function deleteFolder() {
 
 function addNewFolder() {
     var name
-    var list = document.getElementsByClassName("fa fa-folder-open-o");
+    var list = document.getElementsByClassName("fa fa-folder-open");
     for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder-open"
+        list[i].className="fa fa-folder-open-o"
         var id_ = list[i].id.substring(0,2);
         $.post("set",{
             id:id_,
@@ -96,9 +96,9 @@ function addNewFolder() {
 
         return;
     }
-    var list = document.getElementsByClassName("fa fa-folder-o");
+    var list = document.getElementsByClassName("fa fa-folder");
     for(var i = 0;i<list.length;i++){
-        list[i].className="fa fa-folder"
+        list[i].className="fa fa-folder-o"
         var id_ = list[i].id.substring(0,2);
         if(id_==id)
             return;

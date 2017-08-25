@@ -39,7 +39,7 @@ public class Folders extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuilder htmlText = new StringBuilder();
-        FolderEntity folderEntity = FolderRepositories.getFolden(0);
+        FolderEntity folderEntity = FolderRepositories.getFolden(new Integer(1));
         String nameFolder = folderEntity.getName();
         int id = folderEntity.getId();
         htmlText.

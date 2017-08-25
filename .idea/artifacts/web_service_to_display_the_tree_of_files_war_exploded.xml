@@ -7,6 +7,10 @@
         <element id="directory" name="classes">
           <element id="module-output" name="web_service_to_display_the_tree_of_files" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="JUnit4" module-name="web_service_to_display_the_tree_of_files" />
+          <element id="library" level="project" name="Hibernate 5.2.10-5.2.10" />
+        </element>
       </element>
     </root>
   </artifact>

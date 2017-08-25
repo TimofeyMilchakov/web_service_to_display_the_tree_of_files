@@ -11,13 +11,14 @@
       <table id="2" parent="1" name="folder"/>
       <column id="3" parent="2" name="id">
         <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
+        <data-type>bigint(20)</data-type>
+        <sequence-identity>1</sequence-identity>
       </column>
-      <column id="4" parent="2" name="name">
+      <column id="4" parent="2" name="parent_id">
         <mandatory>1</mandatory>
-        <data-type>char(50)</data-type>
+        <data-type>bigint(20)</data-type>
       </column>
-      <column id="5" parent="2" name="subfolder">
+      <column id="5" parent="2" name="name">
         <mandatory>1</mandatory>
         <data-type>char(50)</data-type>
       </column>
