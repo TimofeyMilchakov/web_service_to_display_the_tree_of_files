@@ -21,15 +21,18 @@
 <body>
 <script>getFiestFolder()</script>
 <div>
-    <button onclick="powerButton()" id="moveButton">переместить выбранную папку</button>
     <button onclick="addNewFolder()">добавить папку</button>
     <button onclick="deleteFolder()">удалить папку</button>
     <button onclick="renameFolder()">изменить имя папки</button>
+    <button onclick="powerButton()" id="moveButton">переместить выбранную папку</button>
+</div>
+<div>
+    имя папки:<input type="text" size="30" value="" name="name" id="inputBox" >
 </div>
 <div id="fF"></div>
-<div id="test"></div>
 
-    <input type="text" size="30" value="" name="name" id="inputBox" >
+
+
 
 </body>
 </html>

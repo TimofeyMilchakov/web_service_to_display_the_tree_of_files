@@ -46,6 +46,19 @@ public class FolderRepositories  {
         session.close();
         return (FolderEntity) folderEntity.get(0);
     }
+    public static FolderEntity getFolden(int parent_id, String name){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List folderEntity = session.
+                createCriteria(FolderEntity.class).
+                add(Expression.like("parent_id",parent_id)).
+                add(Expression.like("name",name)).
+                list();
+        session.getTransaction().commit();
+        session.close();
+
+        return (FolderEntity) folderEntity.get(0);
+    }
 
     public static void upDateFolder(FolderEntity newFodlerEntity){
         Session session = HibernateUtil.getSessionFactory().openSession();

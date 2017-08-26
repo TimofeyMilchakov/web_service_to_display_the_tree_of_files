@@ -25,6 +25,16 @@
         <url-pattern>/set</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>returnInfo</servlet-name>
+        <url-pattern>/return</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>returnInfo</servlet-name>
+        <servlet-class>servlets.returnInfo</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>SetFolders</servlet-name>
         <servlet-class>servlets.SetFolders</servlet-class>

@@ -28,24 +28,33 @@ public class Folders extends HttpServlet {
                     append("<li id =\"" + id + "-li\">" +
 //                            "div id =\"" + id + "-div\">" +
                             "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"" + id + "\" onclick=\"getSubfolders('" + id + "')\"></i>" +
+                            "<i class=\"fa fa-spinner fa-spin\" id=\"" + id + "-spinner\" style=\"display: none;\" aria-hidden=\"true\"></i>" +
                             "<i class=\"fa fa-folder-o\" onclick=\"colorFolder('" + id + "')\" id=\"" + id + "-folder\"  aria-hidden=\"true\">" + nameFolder + "</i>" +
                             "<ul id=\"" + id + "-list\">" +
                             "</ul>" +
 //                            "</div>" +
                             "</li>");
         }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         response.getWriter().write(htmlText.toString());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         StringBuilder htmlText = new StringBuilder();
-        FolderEntity folderEntity = FolderRepositories.getFolden(new Integer(1));
+
+        FolderEntity folderEntity = FolderRepositories.getFolden(1);
         String nameFolder = folderEntity.getName();
         int id = folderEntity.getId();
         htmlText.
                 append("<li id =\"" + id + "-li\">" +
 //                        "div id =\"" + id + "-div\">" +
                         "<i class=\"fa fa-angle-right\" aria-hidden=\"true\" id=\"" + id + "\" onclick=\"getSubfolders('" + id + "')\"></i>" +
+                        "<i class=\"fa fa-spinner fa-spin\" id=\"" + id + "-spinner\" style=\"display: none;\" aria-hidden=\"true\"></i>" +
                         "<i class=\"fa fa-folder-o\" onclick=\"colorFolder('" + id + "')\" id=\"" + id + "-folder\" aria-hidden=\"true\">" + nameFolder + "</i>" +
                         "<ul id=\"" + id + "-list\">" +
                         "</ul>" +
@@ -53,4 +62,6 @@ public class Folders extends HttpServlet {
                         "</li>");
         response.getWriter().write(htmlText.toString());
     }
+
+
 }

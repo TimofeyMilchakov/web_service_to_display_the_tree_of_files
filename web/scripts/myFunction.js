@@ -2,7 +2,9 @@ function colorFolder(nameFolder) {
     if (document.getElementById("moveButton").style.display == "none") {
         document.getElementById("moveButton").style.display = "";
         var id_ = getId()
-        $("#test").html(id_);
+        if (id_ == -1)
+            return;
+
         if (id_ == nameFolder)
             return;
         moveFolder(id_, nameFolder);
@@ -38,17 +40,18 @@ function getId() {
             continue;
         if (document.getElementById(i + "-folder").className == "fa fa-folder") {
             var id_ = i;
-            document.getElementById(id_).className = "fa fa-folder-o";
+            document.getElementById(id_ + "-folder").className = "fa fa-folder-o";
 
             return id_;
         }
         if (document.getElementById(i + "-folder").className == "fa fa-folder-open") {
             var id_ = i;
-            document.getElementById(id_).className = "fa fa-folder-open-o";
+            document.getElementById(id_ + "-folder").className = "fa fa-folder-open-o";
 
             return id_;
         }
     }
+    return -1;
 
 }
 
@@ -71,7 +74,10 @@ function openFolder(nameFolder) {
 
 
 function deleteFolder() {
-    var id_ = getId()
+    var id_ = getId();
+
+    if (id_ == -1)
+        return;
     $.post("delete", {
         id: id_
     }).done(function () {
@@ -87,6 +93,8 @@ function renameFolder() {
     if (name == "")
         return
     var id_ = getId();
+    if (id_ == -1)
+        return;
     var temp = document.getElementById(id_).className;
     $.get("set", {
         id: id_,
@@ -97,14 +105,19 @@ function renameFolder() {
 }
 
 function addNewFolder() {
-    var name = document.getElementById("inputBox").nodeValue;
+    var name = document.getElementById("inputBox").value;
+    document.getElementById("inputBox").value = "";
     if (name == "")
         return
     var id_ = getId();
+    if (id_ == -1)
+        return;
     $.post("set", {
         parent_id: id_,
         name: name
-    }).done();
+    }).done(function (respons) {
+        $(respons).appendTo("#" + id_ + "-list");
+    });
 
 
 }
@@ -119,30 +132,28 @@ function powerButton() {
 
 function getSubfolders(idFolder) {
 
-    if (document.getElementById(idFolder + "-list").childElementCount != 0) {
-        if (document.getElementById(idFolder).className == 'fa fa-angle-right') {
-            document.getElementById(idFolder).className = 'fa fa-angle-down';
-            document.getElementById(idFolder + "-list").style.display = "";
-            openFolder(idFolder);
-            return;
-        } else {
-            document.getElementById(idFolder).className = 'fa fa-angle-right';
-            document.getElementById(idFolder + "-list").style.display = "none";
-            openFolder(idFolder);
-            return;
-        }
-    } else {
-        if (document.getElementById(idFolder).className == 'fa fa-angle-right') {
-            document.getElementById(idFolder).className = 'fa fa-angle-down';
-        }
+
+    if (document.getElementById(idFolder).className == 'fa fa-angle-down') {
+        document.getElementById(idFolder).className = 'fa fa-angle-right';
+        document.getElementById(idFolder + "-list").style.display = "none";
+        openFolder(idFolder);
+        return;
     }
+
     document.getElementById(idFolder).className = 'fa fa-angle-down';
     openFolder(idFolder);
+    setTimeout(function () {
+        document.getElementById(idFolder).style.display = "none";
+        document.getElementById(idFolder + "-spinner").style.display = "";
+    }, 0);
     $.post("folder", {
         id: idFolder
     }).done(function (response) {
         $("#" + idFolder + "-list").html(response)
-    })
+        document.getElementById(idFolder).style.display = "";
+        document.getElementById(idFolder + "-list").style.display = "";
+        document.getElementById(idFolder + "-spinner").style.display = "none";
+    });
 
 }
 

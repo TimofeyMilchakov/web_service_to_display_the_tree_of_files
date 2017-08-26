@@ -12,15 +12,19 @@ public class DBTest {
     @Test
     public void testConnectDB(){
         ArrayList<FolderEntity> folderEntities = FolderRepositories.getAll();
-        Assert.assertEquals(1,folderEntities.size());
     }
 
     @Test
     public void testSetAndGet(){
 //        FolderRepositories.addFolder(1,"cild1");
 //        FolderRepositories.addFolder(1,"cild2");
-        FolderRepositories.getChildren(1);
-        FolderRepositories.getFolden(1);
+//        FolderRepositories.getChildren(1);
+//        FolderRepositories.getFolden(1);
+        FolderRepositories.getFolden(10,"sdas");
+        FolderEntity folderEntity = new FolderEntity();
+        folderEntity.setParent_id(10);
+        folderEntity.setName("sdas");
+        FolderRepositories.addFolder(folderEntity);
     }
 
     @Test
